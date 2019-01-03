@@ -29,14 +29,14 @@
 #     print(f"{x} is {state}")
 
 emoji = "\U0001f600"
-for x in range (1,11):
+for x in range(1, 11):
     print(emoji * x)
 
 limit = 1
 emoji = "\U0001f600"
 while limit < 11:
     print(emoji * limit)
-    limit+=1
+    limit += 1
 
 while True:
     entry = input("Type 'exit' to exit: ")

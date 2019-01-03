@@ -9,13 +9,13 @@ print(10//3)    # returns an integer
 
 x = 100
 y = 15
-print (x/y)
+print(x/y)
 
 all1, at, once = 5, 10, 15
 
 print(all1 + at + once)
 
-## Called dunder (double underscores), suppose to be private or left alone
+# Called dunder (double underscores), suppose to be private or left alone
 ___no_touchy__ = 10
 
 # data = input("What is your fav college? ")
