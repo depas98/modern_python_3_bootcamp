@@ -89,10 +89,10 @@ songs = [
 ]
 
 # Finds the song with the lowerest playcount
-min(songs, key=lambda s: s['playcount'])  # {"title": "happy birthday", "playcount": 1}
+print(min(songs, key=lambda s: s['playcount']))  # {"title": "happy birthday", "playcount": 1})
 
 # Finds the title of the most played song
-max(songs, key=lambda s: s['playcount'])['title']  # YMCA
+print(max(songs, key=lambda s: s['playcount'])['title'])  # YMCA
 
 
 def extremes(it):
@@ -102,3 +102,124 @@ def extremes(it):
 print(extremes([1, 2, 3, 4, 5]))
 print(extremes((99, 25, 30, -7)))
 print(extremes("alcatraz"))
+
+
+# Return the highest magnitude in a list use abs and max
+def max_magnitude(num_list):
+    return max(abs(num) for num in num_list)
+
+
+print(max_magnitude([300, 20, -900]))
+print(max_magnitude([10, 11, 12]))
+print(max_magnitude([-5, -1, -89]))
+
+
+def sum_even_values(*args):
+    return sum(num for num in args if num % 2 == 0)
+
+
+print(sum_even_values(1, 2, 3, 4, 5, 6))
+print(sum_even_values(4, 2, 1, 10))
+print(sum_even_values(1))
+
+
+def sum_floats(*args):
+    return sum(arg for arg in args if type(arg) is float)
+
+
+print(sum_floats(1.5, 2.4, 'awesome', [], 1))  # 3.9
+print(sum_floats(1, 2, 3, 4, 5))  # 0
+
+
+# zip examples
+
+# unpacking (using *) with zip is very common when working with more complex data structures!
+five_by_two = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)]
+print(list(zip(*five_by_two)))  # [(0, 1, 2, 3, 4), (1, 2, 3, 4, 5)]
+
+midterms = [80, 91, 78]
+finals = [98, 89, 53]
+students = ['dan', 'ang', 'kate']
+
+# returns dict with {student:highest score} USING LIST COMP
+# {'dan': 98, 'ang': 91, 'kate': 78}
+final_grades = {t[0]: max(t[1], t[2]) for t in zip(students, midterms, finals)}
+print(final_grades)
+
+# returns dict with {student:highest score} USING MAP+LAMBDA
+# {'dan': 98, 'ang': 91, 'kate': 78}
+final_grades = dict(
+    zip(
+        students,
+        map(
+            lambda pair: max(pair),
+            zip(midterms, finals)
+        )
+    )
+)
+
+map_iterator = map(
+    lambda pair: max(pair),
+    zip(midterms, finals)
+)
+print(f"map iterator: {list(map_iterator)}")
+print(final_grades)
+
+# returns dict with student:average score
+# {'dan': 89.0, 'ang': 90.0, 'kate': 65.5}
+avg_grades = dict(
+    zip(
+        students,
+        map(
+            lambda pair: (pair[0] + pair[1]) / 2,
+            zip(midterms, finals)
+        )
+    )
+)
+print(avg_grades)
+
+
+def interleave(str1, str2):
+    return "".join("".join(l) for l in zip(str1, str2))
+
+
+print(interleave("hi", "ha"))
+print(interleave("aaa", "zzz"))
+print(interleave("lzr", "iad"))
+
+
+# lambdas vs list comprehension
+def triple_and_filter(l):
+    # using list comprehension
+    return [x * 3 for x in l if x % 4 == 0]
+
+
+def triple_and_filter2(l):
+    # using lambdas, with filter and map
+    return list(map(
+        lambda num: num * 3,
+        filter(lambda num: num % 4 == 0, l)
+    ))
+
+
+print(triple_and_filter([1, 2, 3, 4]))  # [12]
+print(triple_and_filter([6, 8, 10, 12]))  # [24,36]
+
+print(triple_and_filter2([1, 2, 3, 4]))  # [12]
+print(triple_and_filter2([6, 8, 10, 12]))  # [24,36]
+
+
+def extract_full_name(l):
+    return [f"{name['first']} {name['last']}" for name in l]
+
+
+def extract_full_name2(l):
+    return list(map(
+        lambda name: f"{name['first']} {name['last']}",
+        l
+    ))
+
+
+names = [{'first': 'Elie', 'last': 'Schoppik'}, {'first': 'Colt', 'last': 'Steele'}]
+print(extract_full_name(names))  # ['Elie Schoppik', 'Colt Steele']
+print(extract_full_name2(names))  # ['Elie Schoppik', 'Colt Steele']
