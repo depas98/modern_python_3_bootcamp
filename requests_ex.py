@@ -18,6 +18,7 @@ response = requests.get(url, headers={"Accept": "application/json"})
 print(type(response.text))
 
 data = response.json()
+print(data)
 print(type(data))  # 'dict'
 print(data["joke"])
 print(f"status: {data['status']}")
